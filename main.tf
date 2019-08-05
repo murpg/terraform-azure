@@ -2,7 +2,6 @@ variable "subscription_id" {}
 variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
-
 variable "web_server_location" {}
 variable "web_server_rg" {}
 variable "resource_prefix" {}
@@ -107,11 +106,27 @@ resource "azurerm_virtual_machine" "web_server" {
     computer_name                = "${var.web_server_name}"
     admin_username               = "${var.admin_username}"
     admin_password               = "${var.admin_password}"
-
   }
 
   os_profile_windows_config {
-
+    provision_vm_agent = true
   }
+
+}
+resource "azurerm_virtual_machine_extension" "test" {
+  name                 = "hostname"
+  location             = "${var.web_server_location}"
+  resource_group_name  = "${azurerm_resource_group.web_server_rg.name}"
+  virtual_machine_name = "${var.web_server_name}"
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.9"
+
+  settings = <<SETTINGS
+    {
+      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/custom/InstallCountChocula.ps1"],
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InstallCountChocula.ps1"
+    }
+SETTINGS
 
 }

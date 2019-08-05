@@ -1,3 +1,5 @@
 /locations.txt
 /terraform-azure.code-workspace
 /.terraform
+/terraform.tfstate
+/terraform.tfstate.backup
