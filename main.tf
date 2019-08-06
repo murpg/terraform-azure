@@ -121,10 +121,13 @@ resource "azurerm_virtual_machine_extension" "test" {
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
+  depends_on           = ["azurerm_virtual_machine.web_server"]
 
   settings = <<SETTINGS
     {
-      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/custom/InstallCountChocula.ps1"],
+
+      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/custom/InstallCountChocula.ps1","https://raw.githubusercontent.com/murpg/CountChocula/custom/TurnOnHyperV.ps1"],
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File TurnOnHyperV.ps1",
       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InstallCountChocula.ps1"
     }
 SETTINGS
