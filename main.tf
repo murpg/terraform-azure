@@ -89,9 +89,9 @@ resource "azurerm_virtual_machine" "web_server" {
   vm_size                      = "Standard_E2s_v3"
 
   storage_image_reference {
-    publisher = "MicrosoftWindowsDesktop"
-    offer     = "Windows-10"
-    sku       = "rs5-pro"
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
     version   = "latest"
   }
 
