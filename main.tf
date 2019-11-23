@@ -11,6 +11,9 @@ variable "web_server_name" {}
 variable "environment" {}
 variable "admin_username" {}
 variable "admin_password" {}
+variable "allowed_ip"{}
+
+
 
 
 provider "azurerm" {
@@ -75,7 +78,7 @@ resource "azurerm_network_security_rule" "web_server_nsg_rule_rdp" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "3389"
-  source_address_prefix       = "*"
+  source_address_prefix       = "${var.allowed_ip}"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.web_server_rg.name}" 
   network_security_group_name = "${azurerm_network_security_group.web_server_nsg.name}" 
@@ -91,7 +94,7 @@ resource "azurerm_virtual_machine" "web_server" {
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
+    sku       = "2012-Datacenter"
     version   = "latest"
   }
 
