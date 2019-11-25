@@ -130,7 +130,7 @@ resource "azurerm_virtual_machine_extension" "test" {
     {
 
       "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/customwin2012/InstallCountChocula.ps1","https://raw.githubusercontent.com/murpg/CountChocula/customwin2012/setUpIIS.ps1"],
-      "commandToExecute": "powershell.exe -ExecutionPolicy Bypass Unrestricted -File setUpIIS.ps1",
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted Bypass -Scope CurrentUser -File setUpIIS.ps1",
       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InstallCountChocula.ps1"
     }
 SETTINGS
