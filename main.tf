@@ -129,8 +129,8 @@ resource "azurerm_virtual_machine_extension" "test" {
   settings = <<SETTINGS
     {
 
-      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/custom/InstallCountChocula.ps1","https://raw.githubusercontent.com/murpg/CountChocula/custom/TurnOnHyperV.ps1"],
-      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File TurnOnHyperV.ps1",
+      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/customwin2012/InstallCountChocula.ps1","https://raw.githubusercontent.com/murpg/CountChocula/customwin2012/setUpIIS.ps1"],
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File setUpIIS.ps1",
       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InstallCountChocula.ps1"
     }
 SETTINGS
