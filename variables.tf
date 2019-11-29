@@ -1,10 +1,9 @@
-
 variable "server_name" {
   default = "web-server"
 }
 
 variable "locations" {
-  type    = "map"
+  type = map(string)
   default = {
     location1 = "eastus"
     location2 = "eastus2"
@@ -12,12 +11,12 @@ variable "locations" {
 }
 
 variable "subnets" {
-  type    = "list"
-  default = ["10.0.1.10","10.0.1.11"]
+  type    = list(string)
+  default = ["10.0.1.10", "10.0.1.11"]
 }
 
 variable "live" {
-  type    = "string"
+  type    = string
   default = false
 }
 
