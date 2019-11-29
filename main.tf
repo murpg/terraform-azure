@@ -17,7 +17,7 @@ variable "allowed_ip"{}
 
 
 provider "azurerm" {
-  version           = "1.16"
+  version           = "~> 1.37.0"
   client_id         = "${var.client_id}"
   client_secret     = "${var.client_secret}"
   tenant_id         = "${var.tenant_id}"
