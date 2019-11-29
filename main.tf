@@ -85,7 +85,7 @@ resource "azurerm_public_ip" "web_server_public_ip" {
   name                         = "${var.web_server_name}-public-ip"
   location                     = var.web_server_location
   resource_group_name          = azurerm_resource_group.web_server_rg.name
-  allocation_method            = var.environment == "production" ? "static" : "dynamic"
+  allocation_method            = var.environment == "production" ? "Static" : "Dynamic"
 }
 
 resource "azurerm_network_security_group" "web_server_nsg" {
