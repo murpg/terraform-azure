@@ -101,7 +101,7 @@ resource "azurerm_network_security_rule" "web_server_nsg_rule_rdp" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "3389"
+  destination_port_ranges     = ["22","80","443","3389"]
   source_address_prefix       = var.allowed_ip
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.web_server_rg.name
