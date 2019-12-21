@@ -153,7 +153,7 @@ resource "azurerm_virtual_machine_extension" "test" {
   settings = <<SETTINGS
     {
 
-      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/customwin2012/InstallCountChocula.ps1"],
+      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/custom-no-docker/InstallCountChocula.ps1"],
        "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InstallCountChocula.ps1"
     }
 SETTINGS
