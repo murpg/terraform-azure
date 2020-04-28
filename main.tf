@@ -115,10 +115,17 @@ resource "azurerm_virtual_machine" "web_server" {
   network_interface_ids = [azurerm_network_interface.web_server_nic.id]
   vm_size               = "Standard_E2s_v3"
 
+  #storage_image_reference {
+    #publisher = "MicrosoftWindowsServer"
+    #offer     = "WindowsServer"
+    #sku       = "2012-R2-Datacenter"
+    #version   = "latest"
+  #}
+
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2012-R2-Datacenter"
+    sku       = "2019-Datacenter"
     version   = "latest"
   }
 
@@ -153,8 +160,8 @@ resource "azurerm_virtual_machine_extension" "test" {
   settings = <<SETTINGS
     {
 
-      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/customwin2012/InstallCountChocula.ps1"],
-       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InstallCountChocula.ps1"
+      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/master/installChocoWin2019.ps1"],
+       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File installChocoWin2019.ps1"
     }
 SETTINGS
 
