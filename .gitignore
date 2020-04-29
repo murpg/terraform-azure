@@ -3,3 +3,5 @@
 /.terraform
 /terraform.tfstate
 /terraform.tfstate.backup
+/installs2.ps1
+/installs.ps1
