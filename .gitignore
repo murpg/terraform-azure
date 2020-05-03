@@ -5,3 +5,5 @@
 /terraform.tfstate.backup
 /installs2.ps1
 /installs.ps1
+/installs3.ps1
+/install-windows-updates.ps1
