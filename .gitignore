@@ -3,3 +3,7 @@
 /.terraform
 /terraform.tfstate
 /terraform.tfstate.backup
+/applicationMemoryPoolSettings.txt
+/checkNoneSelfsigned.ps1
+/setPSRemoteAccess.ps1
+/Start-IISCommitDelay.ps1
