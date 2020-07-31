@@ -7,3 +7,7 @@
 /installs.ps1
 /installs3.ps1
 /install-windows-updates.ps1
+/applicationMemoryPoolSettings.txt
+/checkNoneSelfsigned.ps1
+/setPSRemoteAccess.ps1
+/Start-IISCommitDelay.ps1
