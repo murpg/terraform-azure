@@ -11,3 +11,4 @@
 /checkNoneSelfsigned.ps1
 /setPSRemoteAccess.ps1
 /Start-IISCommitDelay.ps1
+/configureEnvironmentVars.ps1
