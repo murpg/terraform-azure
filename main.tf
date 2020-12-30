@@ -164,7 +164,7 @@ resource "azurerm_virtual_machine_extension" "test" {
     {
 
       "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/master/Windows2019.ps1"],
-       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File installChocoWin2019.ps1"
+       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File Windows2019.ps1"
     }
 SETTINGS
 
