@@ -115,6 +115,9 @@ resource "azurerm_virtual_machine" "web_server" {
   network_interface_ids = [azurerm_network_interface.web_server_nic.id]
   vm_size               = "Standard_E2s_v3"
 
+  # Uncomment this line to delete the OS disk automatically when deleting the VM
+  delete_os_disk_on_termination = true
+
   #storage_image_reference {
     #publisher = "MicrosoftWindowsServer"
     #offer     = "WindowsServer"
@@ -167,3 +170,33 @@ SETTINGS
 
 }
 
+resource "azurerm_managed_disk" "Sites" {
+  name                 = "${var.web_server_name}-disk1"
+  location             = var.web_server_location
+  resource_group_name  = azurerm_resource_group.web_server_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
+}
+resource "azurerm_managed_disk" "Data" {
+  name                 = "${var.web_server_name}-disk2"
+  location             = var.web_server_location
+  resource_group_name  = azurerm_resource_group.web_server_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "Sites" {
+  managed_disk_id    = azurerm_managed_disk.Sites.id
+  virtual_machine_id = azurerm_virtual_machine.web_server.id
+  lun                = "10"
+  caching            = "None"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "Data" {
+  managed_disk_id    = azurerm_managed_disk.Data.id
+  virtual_machine_id = azurerm_virtual_machine.web_server.id
+  lun                = "20"
+  caching            = "None"
+}
