@@ -94,8 +94,8 @@ resource "azurerm_network_security_group" "web_server_nsg" {
   resource_group_name = azurerm_resource_group.web_server_rg.name
 }
 
-resource "azurerm_network_security_rule" "web_server_nsg_rule_rdp" {
-  name                        = "RDP Inbound"
+resource "azurerm_network_security_rule" "w_s_nsg_rule_rdp" {
+  name                        = "RDPInbound"
   priority                    = 100
   direction                   = "Inbound"
   access                      = "Allow"
@@ -128,7 +128,7 @@ resource "azurerm_virtual_machine" "web_server" {
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2012-Datacenter"
+    sku       = "2016-Datacenter"
     version   = "latest"
   }
 
