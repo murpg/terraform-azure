@@ -53,6 +53,13 @@ resource "azurerm_resource_group" "web_server_rg" {
   location = var.web_server_location
 }
 
+/*data "azurerm_managed_disk" "datasourcemd" {
+  name                = "testManagedDisk"
+  #resource_group_name = "web-rg-dbg" #azurerm_resource_group.web_server_rg.name
+  depends_on = [azurerm_resource_group.web_server_rg]
+  
+}*/
+
 resource "azurerm_virtual_network" "web_server_vnet" {
   name                = "${var.resource_prefix}-vnet"
   location            = var.web_server_location
@@ -82,10 +89,10 @@ resource "azurerm_network_interface" "web_server_nic" {
 }
 
 resource "azurerm_public_ip" "web_server_public_ip" {
-  name                         = "${var.web_server_name}-public-ip"
-  location                     = var.web_server_location
-  resource_group_name          = azurerm_resource_group.web_server_rg.name
-  allocation_method            = var.environment == "production" ? "Static" : "Dynamic"
+  name                = "${var.web_server_name}-public-ip"
+  location            = var.web_server_location
+  resource_group_name = azurerm_resource_group.web_server_rg.name
+  allocation_method   = var.environment == "production" ? "Static" : "Dynamic"
 }
 
 resource "azurerm_network_security_group" "web_server_nsg" {
@@ -101,7 +108,7 @@ resource "azurerm_network_security_rule" "w_s_nsg_rule_rdp" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_ranges     = ["22","80","443","3389"]
+  destination_port_ranges     = ["22", "80", "443", "3389"]
   source_address_prefix       = var.allowed_ip
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.web_server_rg.name
@@ -119,10 +126,10 @@ resource "azurerm_virtual_machine" "web_server" {
   delete_os_disk_on_termination = true
 
   #storage_image_reference {
-    #publisher = "MicrosoftWindowsServer"
-    #offer     = "WindowsServer"
-    #sku       = "2012-R2-Datacenter"
-    #version   = "latest"
+  #publisher = "MicrosoftWindowsServer"
+  #offer     = "WindowsServer"
+  #sku       = "2012-R2-Datacenter"
+  #version   = "latest"
   #}
 
   storage_image_reference {
@@ -138,6 +145,22 @@ resource "azurerm_virtual_machine" "web_server" {
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
+
+  /* storage_data_disk {
+    name              = "datadisk_new"
+    managed_disk_type = "Standard_LRS"
+    create_option     = "Empty"
+    lun               = 0
+    disk_size_gb      = "1023"
+  }
+
+  storage_data_disk {
+    name            = data.azurerm_managed_disk.datasourcemd.name
+    managed_disk_id = data.azurerm_managed_disk.datasourcemd.id
+    create_option   = "Attach"
+    lun             = 1
+    disk_size_gb    = data.azurerm_managed_disk.datasourcemd.disk_size_gb
+  }*/
 
   os_profile {
     computer_name  = var.web_server_name
@@ -163,14 +186,14 @@ resource "azurerm_virtual_machine_extension" "test" {
   settings = <<SETTINGS
     {
 
-      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/master/installChocoWin2019.ps1"],
-       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File installChocoWin2019.ps1"
+      "fileUris": ["https://raw.githubusercontent.com/murpg/CountChocula/master/win-2016-development.ps1"],
+       "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File win-2016-development.ps1"
     }
 SETTINGS
 
 }
 
-resource "azurerm_managed_disk" "Sites" {
+/*resource "azurerm_managed_disk" "Sites" {
   name                 = "${var.web_server_name}-disk1"
   location             = var.web_server_location
   resource_group_name  = azurerm_resource_group.web_server_rg.name
@@ -199,4 +222,4 @@ resource "azurerm_virtual_machine_data_disk_attachment" "Data" {
   virtual_machine_id = azurerm_virtual_machine.web_server.id
   lun                = "20"
   caching            = "None"
-}
+}*/
