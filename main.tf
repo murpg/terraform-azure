@@ -10,6 +10,7 @@ variable "client_secret" {
 variable "tenant_id" {
 }
 
+
 variable "web_server_location" {
 }
 
@@ -40,6 +41,7 @@ variable "admin_password" {
 variable "allowed_ip" {
 }
 
+
 provider "azurerm" {
   version         = "~> 1.37.0"
   client_id       = var.client_id
@@ -48,10 +50,12 @@ provider "azurerm" {
   subscription_id = var.subscription_id
 }
 
+
 resource "azurerm_resource_group" "web_server_rg" {
   name     = var.web_server_rg
   location = var.web_server_location
 }
+
 
 resource "azurerm_virtual_network" "web_server_vnet" {
   name                = "${var.resource_prefix}-vnet"
@@ -82,10 +86,10 @@ resource "azurerm_network_interface" "web_server_nic" {
 }
 
 resource "azurerm_public_ip" "web_server_public_ip" {
-  name                         = "${var.web_server_name}-public-ip"
-  location                     = var.web_server_location
-  resource_group_name          = azurerm_resource_group.web_server_rg.name
-  allocation_method            = var.environment == "production" ? "Static" : "Dynamic"
+  name                = "${var.web_server_name}-public-ip"
+  location            = var.web_server_location
+  resource_group_name = azurerm_resource_group.web_server_rg.name
+  allocation_method   = var.environment == "production" ? "Static" : "Dynamic"
 }
 
 resource "azurerm_network_security_group" "web_server_nsg" {
@@ -94,14 +98,14 @@ resource "azurerm_network_security_group" "web_server_nsg" {
   resource_group_name = azurerm_resource_group.web_server_rg.name
 }
 
-resource "azurerm_network_security_rule" "web_server_nsg_rule_rdp" {
-  name                        = "RDP Inbound"
+resource "azurerm_network_security_rule" "w_s_nsg_rule_rdp" {
+  name                        = "RDPInbound"
   priority                    = 100
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_ranges     = ["22","80","443","3389"]
+  destination_port_ranges     = ["22", "80", "443", "3389"]
   source_address_prefix       = var.allowed_ip
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.web_server_rg.name
@@ -137,6 +141,22 @@ resource "azurerm_virtual_machine" "web_server" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
+  }
+
+  storage_data_disk {
+    name              = "data1"
+    managed_disk_type = "Standard_LRS"
+    create_option     = "Empty"
+    lun               = 0
+    disk_size_gb      = "10"
+  }
+
+  storage_data_disk {
+    name              = "data2"
+    managed_disk_type = "Standard_LRS"
+    create_option     = "Empty"
+    lun               = 1
+    disk_size_gb      = "10"
   }
 
   os_profile {
