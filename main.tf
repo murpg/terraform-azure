@@ -123,16 +123,23 @@ resource "azurerm_virtual_machine" "web_server" {
   delete_os_disk_on_termination = true
 
   #storage_image_reference {
-    #publisher = "MicrosoftWindowsServer"
-    #offer     = "WindowsServer"
-    #sku       = "2012-R2-Datacenter"
-    #version   = "latest"
+  #publisher = "MicrosoftWindowsServer"
+  #offer     = "WindowsServer"
+  #sku       = "2012-R2-Datacenter"
+  #version   = "latest"
+  #}
+
+  #storage_image_reference {
+  #publisher = "MicrosoftWindowsServer"
+  #offer     = "WindowsServer"
+  #sku       = "2016-Datacenter"
+  #version   = "latest"
   #}
 
   storage_image_reference {
-    publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
+    publisher = "MicrosoftWindowsServer"
+    sku       = "2019-Datacenter"
     version   = "latest"
   }
 
