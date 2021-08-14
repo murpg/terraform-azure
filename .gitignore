@@ -12,3 +12,4 @@
 /setPSRemoteAccess.ps1
 /Start-IISCommitDelay.ps1
 /configureEnvironmentVars.ps1
+/.terraform.lock.hcl
